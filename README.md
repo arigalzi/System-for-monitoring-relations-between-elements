@@ -1,2 +1,2 @@
-# System-for-monitoring-relations-between-elements
+# system-for-monitoring-relations-between-elements
 Implementation in standard C language (with only libc) of a program that reads a sequence of commands from standard input, each corresponding to a change in the entities or in the relationships between entities and, when required, produces on standard output, for each type of monitored relationship, the identifier of the entity that is the recipient of the largest number of instances of that relationship, and the number of relationships the entity receives
