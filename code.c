@@ -1,4 +1,5 @@
-//Progetto Api
+//Algorithms and data structure project
+//Main data structures applied : Red-Black Binary Trees
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,34 +7,34 @@
 
 //RB TREES, 3 different types:
 
-struct entrel{   //ALBERO ENTITA' CORRELATE  tipo 3
-    char *nomirel; //nomi delle entità in relazione con l'entità prinicpale dell'albero rb di tipo1
-    struct entrel *sx, *dx, *padre; //è un albero bst
-    int colrel; //colore 0 nero 1 rosso
+struct entrel{   //Entity Tree type n.3
+    char *nomirel; //list of names of the entities in relation with the main entity of the rb tree of type 1 
+    struct entrel *sx, *dx, *padre; //it's a binary research tree
+    int colrel; //color: 0 if black 1 if red
 };
 typedef struct entrel* treerel;
 
-struct nomre{   // ALBERO NOMI RELAZIONI tipo 2 / usato anche per la report
-    int relcont; //n. di entità correlate
-    char *relanome; // nome relazione
+struct nomre{   // Relationships' Name Tree of type n.2 (used also for the report function)
+    int relcont; //number of entities related
+    char *relanome; // name of the relationship
     struct nomre* si, *de, *padre;
-    treerel rent; //albero di nomi di relazioni correlate
-    int colnom; //colore
+    treerel rent; //tree of relationships' names correlated
+    int colnom; //color: 0 if black 1 if red
 };
 
 typedef struct nomre* treenomr;
 
-struct nodorb{   //ALBERO DELLE ENTITA' tipo 1
-    treenomr arrayent;//albero con ogni relazione in cui ci sono entità correlate
+struct nodorb{   //Entity Tree type n.1
+    treenomr arrayent;//tree with each relationship in which there are correlated entities 
     //levo i nomi relazioni per ogni nodo ne ho tanti ( ti serve matrice merchè hai nomi lunghi 1000 per ogni 1000 rel;
-    char *value; //nome entità nell'albero
+    char *value; //Entity name in the tree
     struct nodorb *left, *right, *padre;
-    int colore; // 0 nero 1 rosso
+    int colore; //color: 0 if black 1 if red
 };
 
 typedef struct nodorb* rbtree;
 
-rbtree t0; //dichiarazioni globali
+rbtree t0; //Global declarations
 rbtree nil;
 treerel nilrel;
 treenomr nilnomr;
@@ -43,26 +44,26 @@ void delent (char ent2[MAX], rbtree *t2, treenomr rep2);
 void delrel (char rel2[MAX],rbtree t4, char primaent1[MAX], char secondaent1[MAX], treenomr rep4);
 void report (treenomr rep5);
 
-// funzioni supplementari
+//Support functions
 rbtree ricercaent(char enta[MAX], rbtree ta);
 rbtree trovasuccessore(rbtree tb);
 void aggiungiinrel(treenomr tc,char entc[MAX],treerel *albc);
 void eliminadallarel(treenomr te, char ente[MAX], treerel *albe );
 void delentsupport1(rbtree tg,char entelim[MAX], treenomr repg,rbtree base);
 
-// per albero tipo 2
+//Functions for tree of type n.2
 void svuotanomrel (treenomr reln1);
 treenomr ricercanomre(treenomr reln2, char *nomer);
 void aggiunginomre(treenomr *reln3, char *renome);
 void elimmetarel(treenomr *reln4, char *entiel,treenomr repn4,rbtree tn4,char *ental);
 
-//albero tipo 3
+//Functions for tree of type n.3
 treerel ricercaentrel(char entm[MAX], treerel tm);
 treerel trovasuccessorerel(treerel tn);
 void svuotarel(treerel repy);
 
 
-// per albero report (uguale al tipo 2)
+//Functions for tree of type n.2 but related to report
 void scorrirelrep (char *relmod, rbtree albero,treenomr reph);
 void addentrep(char *entc,treerel *albc);
 void aggiunginomrrep(treenomr *repl,char *nuovarelrep, int nuovocont, char *primaent);
@@ -71,18 +72,18 @@ void inordertrewalkprinc( treenomr reln5, char **c);
 void toglioccorrenzerep(treenomr repp,rbtree albp, char *elimrepp);
 void eliminadallarelrep(treerel *repq, char *elimrepq);
 
-//aggiustamenti per renderli rb tipo1
+//Functions for fixing in order to order nodes to make the rb tree of type n.1 
 void leftrotate(rbtree *rb1,rbtree rot1);
 void rightrotate(rbtree *rb2,rbtree rot2);
 void addentfixup(rbtree *rb3, rbtree fix3);
 void delentfixup(rbtree *rb4, rbtree fix4);
 
-//tipo2
+//Functions for basic manipulation of tree of type n.2
 void leftnomrot(treenomr *rb8,treenomr rot8);
 void rightnomrot(treenomr *rb9, treenomr rot9);
 void addentnomfixup(treenomr *rb10, treenomr fix10);
 
-//tipo 3
+//Functions for basic manipulation and reordering of tree of type n.3
 void leftrelrot(treerel *rb5,treerel rot5 );
 void rightrelrot(treerel *rb6, treerel rot6);
 void addentrelfixup(treerel *rb7, treerel fix7);
@@ -91,7 +92,7 @@ int main () {
     char stringa[200], *token1;
     char op[20], enti1[MAX], enti2[MAX], rel[MAX];
 
-    nil= malloc(sizeof(struct nodorb));
+    nil= malloc(sizeof(struct nodorb)); //allocate memory space
     nil->colore=0;
     nil->left=nil;
     nil->right=nil;
@@ -110,7 +111,7 @@ int main () {
     nilnomr->si=nilnomr;
     nilnomr->de=nilnomr;
 
-    treenomr repaggiornata=nilnomr; //albero report
+    treenomr repaggiornata=nilnomr; //Tree for the report function
 
 
     static char *add1 = "addent";
@@ -118,16 +119,16 @@ int main () {
     static char *add2 = "addrel";
     static char *del2 = "delrel";
     static char *rep = "report";
-//static char *end = "end";
+    //static char *end = "end";
 
 
-    while (fgets(stringa, 150, stdin) != NULL) { // ciclo per acquisire comando
+    while (fgets(stringa, 150, stdin) != NULL) { //While cycle to read from input the command string with the request that has to be computed
 
-        stringa[strlen(stringa) - 1] = 0; //toglie lo /n alla fine della riga
+        stringa[strlen(stringa) - 1] = 0; //final /n has to be deleted from the string
         token1 = strtok(stringa, " ");
         strcpy(op, token1);
 
-        token1 = strtok(NULL, " ");
+        token1 = strtok(NULL, " "); //strtok is used to improve speed of read and manipulation of the strings -> to speed up the execution time 
         if (token1 != NULL) {
             strcpy(enti1, token1);
             token1 = strtok(NULL, " ");
